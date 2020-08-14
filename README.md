@@ -1,5 +1,5 @@
 # BaseProject
-Installation de base Symfony, React, Bootstrap ES
+Installation de base Symfony, React, Bootstrap4 (+poper & jquery) ES
 
 Symfony 5.1 avec une install en mode app web
 
