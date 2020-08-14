@@ -10,15 +10,16 @@
 
 {% block body %}
 
-	<h1>Mon app Symfony 5 et ReactJs</h1>
-	<body>Projet de base configuré pour commencer une nouvelle app Web</body>
+	{# <h1>Mon app Symfony 5 et ReactJs</h1>
+		<body>Projet de base configuré pour commencer une nouvelle app Web</body> #}
 
-
+	<div id="like_button_container"></div>
 {% endblock %}
 
 
 {% block javascripts %}
 
-	{{encore_entry_script_tags('app')}}
+	{{encore_entry_script_tags('like_button')}}
+
 
 {% endblock %}
