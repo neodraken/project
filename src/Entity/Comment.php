@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\String_;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -47,6 +48,11 @@ class Comment
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photoFilename;
+
+    public function __toString()
+    {
+        return (string) $this->getEmail();
+    }
 
     public function getId(): ?int
     {
