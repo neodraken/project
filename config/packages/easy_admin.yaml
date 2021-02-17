@@ -5,6 +5,7 @@ easy_admin:
     menu:
       - { route: "homepage", label: "Back to the website", icon: "home" }
       - { entity: "Conference", label: "Conferences", icon: "map-marker" }
+      - { property: 'photoFilename', type: 'image', 'base_path': "/uploads/photos", label: 'Photo' }
       - { entity: "Comment", label: "Comments", icon: "comments" }
 
   entities:
