@@ -9,7 +9,6 @@ use App\Message\CommentMessage;
 use App\Repository\CommentRepository;
 use App\Repository\ConferenceRepository;
 use App\SpamChecker;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -24,11 +23,13 @@ class ConferenceController extends AbstractController
 
     private $entityManager;
     private $bus;
+    private $twig;
 
-    public function __construct(EntityManagerInterface $entityManager, MessageBusInterface $bus)
+    public function __construct(EntityManagerInterface $entityManager, MessageBusInterface $bus, Environment $twig)
     {
         $this->entityManager = $entityManager;
         $this->bus = $bus;
+        $this->twig = $twig;
     }
 
     /**
@@ -36,10 +37,31 @@ class ConferenceController extends AbstractController
      */
     public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
     {
-        return $this->render('conference/index.html.twig', [
-            // 'conferences' => $conferenceRepository->findAll()
+        $response = $this->render('conference/index.html.twig', [
+            'conferences' => $conferenceRepository->findAll()
         ]);
+
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
+
+    /**
+     * @Route("/conference_header", name="conference_header")
+     *
+     * @param ConferenceRepository $conferenceRepository
+     * @return Response
+     */
+    public function conferenceHeader(ConferenceRepository $conferenceRepository): Response
+    {
+        $response = new Response($this->twig->render('conference/header.html.twig', [
+            'conferences' => $conferenceRepository->findAll(),
+        ]));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
+    }
+
+
 
     /**
      * @Route("/conference/{slug}", name="conference")
